@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Your Shopping Cart</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e8eaf6, #fce4ec);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background-color: white;
+            padding: 40px 50px;
+            border-radius: 18px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            text-align: left;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 25px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+            outline: none;
+        }
+
+        button {
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #574fd6;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🛍️ View Your Shopping Cart</h2>
+        <form method="POST" action="{{ url_for('cart') }}">
+            <label for="user_id">User ID</label>
+            <input type="number" name="user_id" id="user_id" placeholder="e.g. 10" required>
+            <button type="submit">View Cart</button>
+        </form>
+    </div>
+</body>
+</html>
+

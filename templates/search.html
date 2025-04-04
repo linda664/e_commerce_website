@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block title %}Search Products{% endblock %}
+
+{% block content %}
+    <h1>🔍 Search Products</h1>
+    <form method="post">
+        <input type="text" name="keyword" value="{{ keyword }}" placeholder="Enter keyword">
+        <input type="submit" value="Search">
+    </form>
+
+    {% if results %}
+    <h2>Results:</h2>
+    <div class="product-list">
+        {% for pid, name, price, rating in results %}
+        <div class="product-item">
+            <div class="product-name"><strong>{{ name }}</strong></div>
+            <div class="product-meta">
+                Price: ${{ price }} | ⭐ {{ rating }}
+                <a href="/product/{{ pid }}">View</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+

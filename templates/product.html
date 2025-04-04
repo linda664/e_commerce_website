@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+
+<!-- ✅ 商品基本信息区域 -->
+<div class="product-meta">
+    <p><strong>🆔 Product ID:</strong> {{ product.product_id }}</p>
+    <p><strong>📂 Category:</strong> {{ product.category }}</p>
+    <p><strong>💰 Price:</strong> ${{ product.price }}</p>
+    <p><strong>📦 Stock:</strong> {{ product.stock_quantity }}</p>
+    <p><strong>⭐ Rating:</strong> {{ product.rating }}</p>
+</div>
+
+<!-- ✅ 返回按钮 -->
+<hr>
+<a class="back-link" href="/search">⬅ Back to Search</a>
+<hr>
+
+<!-- ✅ 评论展示区域 -->
+<h2>📝 Customer Reviews</h2>
+{% if reviews %}
+    <ul class="review-list">
+        {% for name, rating, text, date in reviews %}
+            <li class="review">
+                <p><strong>{{ name }}</strong> ({{ date }}): ⭐ {{ rating }}</p>
+                <p class="review-text">"{{ text }}"</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No reviews yet.</p>
+{% endif %}
+
+<!-- ✅ 评论提交表单 -->
+<hr>
+<h2>➕ Submit Your Review</h2>
+<form action="/submit_review/{{ product.product_id }}" method="POST">
+    <label for="user_id">User ID:</label><br>
+    <input type="number" name="user_id" required><br><br>
+
+    <label for="rating">Rating (1-5):</label><br>
+    <input type="number" name="rating" min="1" max="5" required><br><br>
+
+    <label for="review_text">Review:</label><br>
+    <textarea name="review_text" rows="4" cols="50" required></textarea><br><br>
+
+    <input type="submit" value="Submit Review">
+</form>
+
+
+{% endblock %}
+
