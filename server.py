@@ -157,18 +157,18 @@ def search():
         keyword = request.form['keyword']
         with engine.connect() as conn:
             cursor = conn.execute(
-                text("""
-            SELECT p.product_id, p.name, p.price, p.rate, p.stock_quantity, COUNT(r.review_id) AS review_count
-            FROM Products p
-            LEFT JOIN Reviews r ON p.product_id = r.product_id
-            WHERE p.name ILIKE :kw
-            GROUP BY p.product_id, p.name, p.price, p.rate, p.stock_quantity
-            ORDER BY 
-                p.rate DESC,               
-                COUNT(r.review_id) DESC,  
-                p.stock_quantity DESC    
-            """)
-            )
+                text(f"""
+                    SELECT p.product_id, p.name, p.price, p.rating
+                    FROM Products p
+                    LEFT JOIN Reviews r ON p.product_id = r.product_id
+                    WHERE p.name ILIKE '%{keyword}%'
+                    GROUP BY p.product_id, p.name, p.price, p.rating, p.stock_quantity
+                    ORDER BY 
+                        p.rating DESC,
+                        COUNT(r.review_id) DESC,
+                        p.stock_quantity DESC
+                """)
+		    )
             results = cursor.fetchall()
     return render_template('search.html', results=results, keyword=keyword)
 
