@@ -157,7 +157,12 @@ def search():
         keyword = request.form['keyword']
         with engine.connect() as conn:
             cursor = conn.execute(
-                text(f"SELECT product_id, name, price, rating FROM Products WHERE name ILIKE '%{keyword}%'")
+                text(f"""
+        SELECT product_id, name, price, rating, stock_quantity
+        FROM Products
+        WHERE name ILIKE '%{keyword}%'
+        ORDER BY rating DESC, stock_quantity DESC
+        """)
             )
             results = cursor.fetchall()
     return render_template('search.html', results=results, keyword=keyword)
