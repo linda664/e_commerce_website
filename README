@@ -1,0 +1,55 @@
+README: COMS W4111 Project Part 3
+Group 26
+
+1. PostgreSQL Account Information
+The PostgreSQL account name for your database on our server:
+Account: yw4384
+Password: 367602
+(psql -U yw4384 -h 34.148.223.31 -d proj1part2)
+
+2. Web Application URL
+http://34.148.183.181:8111/
+
+3.Implemented Features from Proposal
+We successfully implemented the majority of the features proposed in our Part 1 submission, including several improvements and refinements that enhance user experience and database interaction. Below is a breakdown:
+➢	Fully Implemented from Proposal：
+●	Keyword-Based Search
+○	Users can search products using keywords.
+○	Results are displayed based on product title matching.
+○	The system will retrieve and display a list of matching products whose titles include the search keywords.
+○	The search results will be ranked. Ranking order was adjusted due to data 
+constraints. A new multi-criteria logic was used instead. 
+
+●	Shopping Cart
+○	Users can enter their user ID to view their personalized cart.
+The cart displays product names, quantities, individual prices, subtotal per item, and a grand total.
+➢	Not / Partially Implemented:
+For the ranking of products under search page, prioritization of advertisement and country were not implemented, due to absence of relevant fields in the database schema. Instead, we adopted a ranking scheme more grounded in available attributes (see additional features).
+Favorite List Functionality and shopping cart item adding/deleting were not implemented as we prioritized features related to the later stages of the shopping experience, such as checking the shopping cart and order history, and submitting product reviews, over early-stage browsing and product saving features.
+
+➢	Additional Features
+●	Product Browsing Page: Users can view a full catalog of available products, including their ID, name, category, price, stock quantity, and rating.
+●	Product Detail Page: When a product is selected from the search results, a detailed view is shown including full metadata, average rating, and a form for submitting reviews.
+●	Review Submission Enhancements: Under the product detail page, we support the writing and submission of review, not only the review will be displayed on the page, but also will be added to the database(real-time update).
+●	Improved Search Ranking: Our search implementation introduces a new multi-level ranking logic:  (1) Rating (descending), (2) Number of reviews (descending), (3) Stock quantity (descending),  which improves relevance and utility for users. 
+●	Orders Page: It allows users to input their user ID and view a detailed history of all orders they have placed. For each order, the page displays the order ID, total price, order date, delivery status, and a breakdown of purchased product IDs and quantities.
+
+4. Two Most Interesting Database-Driven Pages
+1. Product Search with Ranking
+The /search page allows users to search for products by keyword and ranks the results based on multiple database-driven criteria:
+●	User Input: The keyword input from the HTML form is used to perform a case-insensitive search of Products tables using PostgreSQL command ILIKE '%{keyword}%', to filter product matching with the keyword.
+
+●	Joins & Aggregation: Before ranking the result, the query performs a LEFT JOIN between Products and Reviews tables, enabling the calculation of review counts.
+
+●	Multi-level Sorting: Results are ranked first by rating (descending), then by number of reviews (COUNT(r.review_id)), and finally by stock_quantity. This ensures the most popular and available items appear at the top.
+●	Instantly updating the database: Each review submission triggers a real-time write operation, instantly updating the database and reflecting changes on the review page, demonstrating dynamic user interaction backed by live data integration.
+This query demonstrates a thoughtful use of SQL operations — combining user input filtering, grouping, and compound sorting to support a real-world business need: dynamic product ranking.
+
+2. Shopping Cart Retrieval
+The /cart page allows users to view the contents of their shopping cart by entering their user ID. It retrieves and displays all items currently stored in the user’s cart, including product details, quantity, date added, per-item subtotal, and overall total — simulating a real-world e-commerce checkout preview.
+●	User Input: The user enters their user_id in a form, which is extracted by the Flask backend to execute SQL query.
+●	Multi-table Joins: The SQL query uses JOINs to gather cart metadata and associated product details, including names and prices. Three tables (shopping_cart, shopping_cart_items, products) are joined together using foreign keys (cart_id, product_id) to obtain full cart content details for a specific user.
+●	Backend Calculation: The subtotal for each product (price × quantity) and the overall total cart value are computed on the server side. 
+●	Frontend Rendering: All cart item details are passed to the cart.html template as a list of dictionaries.
+The SQL uses inner joins to combine normalized data spread across three relational tables, preserving referential integrity and reducing redundancy. This feature integrates user interaction with relational data modeling and showcases how back-end logic can support real-time financial calculations and multi-entity data retrieval.
+
