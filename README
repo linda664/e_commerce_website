@@ -3,9 +3,6 @@ Group 26
 
 1. PostgreSQL Account Information
 The PostgreSQL account name for your database on our server:
-Account: yw4384
-Password: 367602
-(psql -U yw4384 -h 34.148.223.31 -d proj1part2)
 
 2. Web Application URL
 http://34.148.183.181:8111/
