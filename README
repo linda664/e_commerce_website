@@ -4,8 +4,8 @@ Group 26
 1. PostgreSQL Account Information
 The PostgreSQL account name for your database on our server:
 
-2. Web Application URL
-http://34.148.183.181:8111/
+2. Web Application URL(Unfortunately, it’s no longer accessible because I had to shut down the Google Cloud VM—it was getting quite expensive)
+http://34.148.183.181:8111/ 
 
 3.Implemented Features from Proposal
 We successfully implemented the majority of the features proposed in our Part 1 submission, including several improvements and refinements that enhance user experience and database interaction. Below is a breakdown:
